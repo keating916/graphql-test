@@ -1,0 +1,55 @@
+
+  .navContainer {
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #654321;
+    flex-wrap: wrap;
+    margin-bottom: 5vh;
+    
+}
+
+.navLinks {
+    flex-direction: row;
+    justify-items: start;
+    padding-left: 2vh;
+}
+
+.navButton {
+    text-decoration: none;
+    background-color: inherit;
+    padding-top: 2vh;
+    padding-right: 2vmin;
+    color:white;
+}
+
+.navPhone {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 418px) {
+    .navPhone {
+        padding-left: 2vh;
+    }
+    
+}
+.navPhone > p {
+    color: white;
+}
+
+
+#phoneLink {
+    text-decoration: none;
+    padding-right: 5vmin;
+    color: white;
+    justify-content: center;
+    align-content: center;
+}
