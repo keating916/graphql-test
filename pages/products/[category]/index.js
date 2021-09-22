@@ -6,15 +6,36 @@ import Link from 'next/link'
 import request, { gql } from 'graphql-request'
 
 
-function Products ({ category }) {
-		return(<p>category page</p>)
+function Products ({products}) {
+	return(
+        <main className={styles.main}>
+            <div className={styles.grid}>
+                {products.sawblades.map(product => {
+                    let { name, price, description, category } = product;
+                    let img = product.images[0].url
+                    let url = `/products/${category}/${product.productNumber}`
+                    description = description.slice(0, 40)+ "..."
+                    return(
+                        <Link href={url} key={product.productNumber} passHref>
+                            <div className={styles.card}>
+                                <Image src={img} alt={description} width={106} height={60} />
+                                <p>{name}</p>
+                                <p>${price}</p>
+                                <p>{description}</p>
+                            </div>
+                        </Link>
+                    )
+                })}
+            </div>
+        </main>
+    )
 	
 }
 
-export async function getStaticProps({ context }) {
+export async function getStaticProps( context ) {
 	const query = gql`
         {
-            sawblades {
+            sawblades(where: {category: ${context.params.category}}) {
                 name
                 productNumber
                 images {
@@ -22,6 +43,7 @@ export async function getStaticProps({ context }) {
                 }
                 description
                 price
+                category
             }
         }
     `
@@ -36,14 +58,16 @@ export async function getStaticProps({ context }) {
 export async function getStaticPaths() {
 	const query = gql`
         {
-            sawblades {
-                category
-            }
+            __type(name: "Category") {
+                enumValues {
+                  name
+                }
+              }
         }
     `
-    const products = await request("https://api-us-west-2.graphcms.com/v2/cktls2x2m1dyd01z08hrwa5nt/master", query)
-	const paths = products.sawblades.map((product) => ({
-		params: { category: product.category }
+    const categories = await request("https://api-us-west-2.graphcms.com/v2/cktls2x2m1dyd01z08hrwa5nt/master", query)
+	const paths = categories.__type.enumValues.map((category) => ({
+		params: { category: category.name }
 	}))
 	return { paths, fallback: 'blocking'}
 }

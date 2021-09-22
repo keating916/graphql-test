@@ -2,6 +2,7 @@ import Image from 'next/image'
 import request, { gql } from 'graphql-request'
 
 export default function productPage({ products }) {
+    console.log(products)
     let { name, price, description } = products.sawblades[0];
     let img = products.sawblades[0].images[0].url
     console.log("product Page")
@@ -44,21 +45,16 @@ export async function getStaticPaths() {
 	const query = gql`
         {
             sawblades {
-                name
-                productNumber
-                images {
-                    url
-                }
-                description
-                price
                 category
+                productNumber
             }
         }
     `
     const products = await request("https://api-us-west-2.graphcms.com/v2/cktls2x2m1dyd01z08hrwa5nt/master", query)
-	const paths = products.sawblades.map((product) => ({
-		params: { category: product.category, productNumber: product.productNumber }
-	}))
-
+	const paths = products.sawblades.map((product) => {
+        console.log(product.category, product.productNumber)
+        return ({
+		params: {category: product.category, productNumber: product.productNumber}
+	})})
 	return { paths, fallback: 'blocking'}
 }

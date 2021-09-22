@@ -23,6 +23,7 @@ function Products ({ products }) {
 								let { name, price, description, category } = product;
 								let img = product.images[0].url
 								let url = `/products/${category}/${product.productNumber}`
+								description = description.slice(0, 40)+ "..."
 								return(
 									<Link href={url} key={product.productNumber} passHref>
 										<div className={styles.card}>

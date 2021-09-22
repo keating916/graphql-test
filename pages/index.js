@@ -7,7 +7,6 @@ import styles from '../styles/Home.module.css'
 
 
 export default function Home({ products }) {
-    console.log(products)
     return(
         <>
             <Link href='/products'>Products</Link>
@@ -49,7 +48,6 @@ export async function getStaticProps() {
         }
     `
     const products = await request("https://api-us-west-2.graphcms.com/v2/cktls2x2m1dyd01z08hrwa5nt/master", query)
-    console.log(products)
 	return {
 		props:{
 			products,
