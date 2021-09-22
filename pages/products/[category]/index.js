@@ -7,29 +7,34 @@ import request, { gql } from 'graphql-request'
 
 
 function Products ({products}) {
-	return(
-        <main className={styles.main}>
-            <div className={styles.grid}>
-                {products.sawblades.map(product => {
-                    let { name, price, description, category } = product;
-                    let img = product.images[0].url
-                    let url = `/products/${category}/${product.productNumber}`
-                    description = description.slice(0, 40)+ "..."
-                    return(
-                        <Link href={url} key={product.productNumber} passHref>
-                            <div className={styles.card}>
-                                <Image src={img} alt={description} width={106} height={60} />
-                                <p>{name}</p>
-                                <p>${price}</p>
-                                <p>{description}</p>
-                            </div>
-                        </Link>
-                    )
-                })}
-            </div>
-        </main>
-    )
-	
+    if(products.sawblades.length > 0) {
+        return(
+            <main className={styles.main}>
+                <div className={styles.grid}>
+                    {products.sawblades.map(product => {
+                        let { name, price, description, category } = product;
+                        let img = product.images[0].url
+                        let url = `/products/${category}/${product.productNumber}`
+                        description = description.slice(0, 40)+ "..."
+                        return(
+                            <Link href={url} key={product.productNumber} passHref>
+                                <div className={styles.card}>
+                                    <Image src={img} alt={description} width={106} height={60} />
+                                    <p>{name}</p>
+                                    <p>${price}</p>
+                                    <p>{description}</p>
+                                </div>
+                            </Link>
+                        )
+                    })}
+                </div>
+            </main>
+        )
+    }else {
+        return(
+            <div className={styles.main}>No blades found</div>
+        )
+    }
 }
 
 export async function getStaticProps( context ) {

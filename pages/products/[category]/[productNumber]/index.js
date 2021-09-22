@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import request, { gql } from 'graphql-request'
+import styles from '../../../../styles/Home.module.css'
+
 
 export default function productPage({ products }) {
     console.log(products)
@@ -7,7 +9,7 @@ export default function productPage({ products }) {
     let img = products.sawblades[0].images[0].url
     console.log("product Page")
     return(
-        <div>
+        <div className={styles.main}>
             <Image src={img} alt={description} width={711} height={400} />
             <p>{name}</p>
             <p>${price}</p>

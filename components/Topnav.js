@@ -13,9 +13,6 @@ export default function Topnav() {
                 <Link href='/products/band'><a className={styles.navButton}>Band Saw Blades</a></Link>
                 <Link href="/contact"><a className={styles.navButton}>Contact Us</a></Link>
             </nav>
-            <div className={styles.navPhone}>
-                <p>Call us: <a id={styles.phoneLink} href="tel:9163661111"><Image src={'/images/smartphone-call.png'} width={16} height={16} className="icon" alt="phone icon" />916-366-1111</a></p>
-            </div>
         </div>
     )
 }
