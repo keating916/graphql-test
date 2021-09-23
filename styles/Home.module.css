@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 .footer {
@@ -88,7 +89,9 @@
   min-width: 40vw;
   width: fit-content;
   min-height: 30vh;
-  padding-bottom: 1vh;
+  padding: 10px;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 .card:hover,

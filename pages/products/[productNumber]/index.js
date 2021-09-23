@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import request, { gql } from 'graphql-request'
-import styles from '../../../../styles/Home.module.css'
+import styles from '../../../styles/Home.module.css'
 
 
 export default function productPage({ products }) {
@@ -47,7 +47,7 @@ export async function getStaticPaths() {
 	const query = gql`
         {
             sawblades {
-                category
+
                 productNumber
             }
         }
