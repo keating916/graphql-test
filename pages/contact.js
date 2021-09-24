@@ -1,5 +1,5 @@
-import emailjs from 'emailjs-com';
 import React, { Component } from 'react'
+import axios from 'axios';
 
 import styles from '../styles/ContactForm.module.css'
 
@@ -30,14 +30,9 @@ export default class Contact extends Component {
         evt.preventDefault()
         let { fname, lname, contactEmail, contactPhone, address, comments } = this.state
         let params = {fname: fname, lname:lname, contactEmail:contactEmail, contactPhone:contactPhone, address:address, comments:comments}
-        const user_ID = "user_mX30CEcEYTVb7EG39rmYu"        
-        const serviceID = 'RLS Contact Form';
-        const templateID = 'RLS';
-        emailjs.send(serviceID, templateID, params, user_ID )
-        .then(res => {
-            console.log(res)
-        })
-        .catch(error=> {console.error(error)})
+
+        let response = axios.post('http://localhost:3000/api/contactAPI', {params})
+        console.log(response)
     }
 
     render() {

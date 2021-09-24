@@ -1,8 +1,7 @@
 import Carousel from 'react-simply-carousel';
 import Image from 'next/image'
 import Link from 'next/link';
-import request, { gql } from 'graphql-request'
-
+import axios from 'axios'
 import styles from '../styles/Home.module.css'
 import { Component } from 'react';
 
@@ -22,55 +21,50 @@ class Home extends Component {
         });
     };
     render() {
-        return(
-            <>
-                <Link href='/products'>Products</Link>
+        if(this.props.products) {
+            return(
+                    <main className={styles.main}>
+                        <Carousel
+                            activeSlideIndex={this.state.activeSlideIndex}
+                            onRequestChange={this.setActiveSlideIndex}
+                            itemsToShow={2}
+                            itemsToScroll={1}
+                            className={styles.grid}>
+                            {this.props.products.sawblades.map(product => {
+                                let { name, price, description, category } = product;
+                                let img = product.images[0].url
+                                let url = `/products/${product.productNumber}`
+                                description = description.slice(0, 40)+ "..."
+                                return(
+                                    <Link href={url} key={product.productNumber} passHref>
+                                        <div  className={styles.card}>
+                                            <Image src={img} alt={description} width={106} height={60} />
+                                            <p>{name}</p>
+                                            <p>${price}</p>
+                                            <p>{description}</p>
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </Carousel>
+                    </main>
+            )
+
+        }else{
+            return(
                 <main className={styles.main}>
-                    <Carousel
-                        activeSlideIndex={this.state.activeSlideIndex}
-                        onRequestChange={this.setActiveSlideIndex}
-                        itemsToShow={2}
-                        itemsToScroll={1}
-                        className={styles.grid}>
-                        {this.props.products.sawblades.map(product => {
-                            let { name, price, description, category } = product;
-                            let img = product.images[0].url
-                            let url = `/products/${category}/${product.productNumber}`
-                            description = description.slice(0, 40)+ "..."
-                            return(
-                                <Link href={url} key={product.productNumber} passHref>
-                                    <div  className={styles.card}>
-                                        <Image src={img} alt={description} width={106} height={60} />
-                                        <p>{name}</p>
-                                        <p>${price}</p>
-                                        <p>{description}</p>
-                                    </div>
-                                </Link>
-                            )
-                        })}
-                    </Carousel>
+                    <div>Loading</div>
                 </main>
-            </>
-        )
+            )
+        }
     }
 }
 
+//gets featured products list from featured API page
 export async function getStaticProps() {
-	const query = gql`
-        {
-            sawblades(where:{featured: true}) {
-                name
-                productNumber
-                images {
-                    url
-                }
-                description
-                price
-            }
-        }
-    `
-    const products = await request("https://api-us-west-2.graphcms.com/v2/cktls2x2m1dyd01z08hrwa5nt/master", query)
-	return {
+    const response = await axios.get('http://localhost:3000/api/featuredAPI')
+    const products = await response.data
+    return {
 		props:{
 			products,
 		}
@@ -78,3 +72,5 @@ export async function getStaticProps() {
 }
 
 export default Home
+
+//TODO change host to dynamic host for deployment
