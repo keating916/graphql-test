@@ -31,7 +31,7 @@ export default class Contact extends Component {
         let { fname, lname, contactEmail, contactPhone, address, comments } = this.state
         let params = {fname: fname, lname:lname, contactEmail:contactEmail, contactPhone:contactPhone, address:address, comments:comments}
 
-        axios.post('http://localhost:3000/api/contactAPI', {params})
+        axios.post('/api/contactAPI', {params})
         .then(response => {
             if(response.data === 'OK') {
                 this.setState({

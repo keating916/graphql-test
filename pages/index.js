@@ -66,7 +66,7 @@ class Home extends Component {
 
 //gets featured products list from featured API page
 export async function getStaticProps() {
-    const response = await axios.get('http://localhost:3000/api/featuredAPI')
+    const response = await axios.get('/api/featuredAPI')
     const products = await response.data
     return {
 		props:{
