@@ -20,7 +20,7 @@ export default function productPage({ products }) {
 }
 
 //gets props from product API page, hiding api key
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const response = await axios.post(`/api/singleProductAPI`, {product: context.params.productNumber})
 	const products = await response.data
 	return {
@@ -28,16 +28,4 @@ export async function getStaticProps(context) {
 			products,
 		}
 	}
-}
-
-//gets full list of products from products API page, and creates paths from the product numbers
-export async function getServerSideProps() {
-	const response = await axios.get('../api/allProductsAPI')
-	const products = await response.data
-	const paths = products.sawblades.map((product) => {
-        return ({
-		    params: {productNumber: product.productNumber},
-            fallback: 'blocking'
-	})})
-	return { paths, fallback: 'blocking'}
 }
