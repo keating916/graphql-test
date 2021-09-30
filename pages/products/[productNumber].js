@@ -29,15 +29,3 @@ export async function getStaticProps(context) {
 		}
 	}
 }
-
-//gets full list of products from products API page, and creates paths from the product numbers
-export async function getStaticPaths() {
-	const response = await axios.get('/api/allProductsAPI')
-	const products = await response.data
-	const paths = products.sawblades.map((product) => {
-        return ({
-		    params: {productNumber: product.productNumber},
-            fallback: 'blocking'
-	})})
-	return { paths, fallback: 'blocking'}
-}
