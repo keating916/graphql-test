@@ -36,7 +36,8 @@ export async function getStaticPaths() {
 	const products = await response.data
 	const paths = products.sawblades.map((product) => {
         return ({
-		    params: {productNumber: product.productNumber}
+		    params: {productNumber: product.productNumber},
+            fallback: 'blocking'
 	})})
 	return { paths, fallback: 'blocking'}
 }
