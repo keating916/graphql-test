@@ -24,29 +24,33 @@ class Home extends Component {
         if(this.props.products) {
             return(
                     <main className={styles.main}>
-                        <Carousel
-                            activeSlideIndex={this.state.activeSlideIndex}
-                            onRequestChange={this.setActiveSlideIndex}
-                            itemsToShow={2}
-                            itemsToScroll={1}
-                            className={styles.grid}>
-                            {this.props.products.sawblades.map(product => {
-                                let { name, price, description, category } = product;
-                                let img = product.images[0].url
-                                let url = `/products/${product.productNumber}`
-                                description = description.slice(0, 40)+ "..."
-                                return(
-                                    <Link href={url} key={product.productNumber} passHref>
-                                        <div  className={styles.card}>
-                                            <Image src={img} alt={description} width={106} height={60} />
-                                            <p>{name}</p>
-                                            <p>${price}</p>
-                                            <p>{description}</p>
-                                        </div>
-                                    </Link>
-                                )
-                            })}
-                        </Carousel>
+                        
+                        <div>
+                            <p>Featured Products</p>
+                            <Carousel
+                                activeSlideIndex={this.state.activeSlideIndex}
+                                onRequestChange={this.setActiveSlideIndex}
+                                itemsToShow={2}
+                                itemsToScroll={1}
+                                className={styles.grid}>
+                                {this.props.products.sawblades.map(product => {
+                                    let { name, price, description, category } = product;
+                                    let img = product.images[0].url
+                                    let url = `/products/${product.productNumber}`
+                                    description = description.slice(0, 40)+ "..."
+                                    return(
+                                        <Link href={url} key={product.productNumber} passHref>
+                                            <div  className={styles.card}>
+                                                <Image src={img} alt={description} width={106} height={60} />
+                                                <p>{name}</p>
+                                                <p>${price}</p>
+                                                <p>{description}</p>
+                                            </div>
+                                        </Link>
+                                    )
+                                })}
+                            </Carousel>
+                        </div>
                     </main>
             )
 
