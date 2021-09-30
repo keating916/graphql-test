@@ -67,7 +67,7 @@ class Products extends Component {
 
 //gets list of all products from products API page, hiding api key
 export async function getStaticProps() {
-    const response = await axios.get('http://localhost:3000/api/productsAPI')
+    const response = await axios.get('http://localhost:3000/api/allProductsAPI')
 	const products = await response.data
 	return {
 		props:{
