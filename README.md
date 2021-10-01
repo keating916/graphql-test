@@ -4,6 +4,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 This app utilizes [GraphCMS](https://graphcms.com/), a headless CMS database to pull products, and display them. Will have cart, checkout, and will email order details to both client and business to fufill the order.
 
+The Main branch is currently being hosted on Vercel [Here](https://graphql-test-bay.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:

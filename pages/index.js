@@ -13,6 +13,7 @@ class Home extends Component {
             activeSlideIndex: 0
         }
         this.setActiveSlideIndex = this.setActiveSlideIndex.bind(this);
+        this.handleAddCart = this.handleAddCart.bind(this);
     }
 
     setActiveSlideIndex = (newActiveSlideIndex) => {
@@ -20,11 +21,29 @@ class Home extends Component {
           activeSlideIndex: newActiveSlideIndex,
         });
     };
+
+    handleAddCart(evt) {
+        console.log(evt.target.id)
+        let t = evt.target.id
+        if(this.props.cart[t]) {
+
+            this.props.setCart({
+                ...this.props.cart,
+                [evt.target.id]: this.props.cart[t] + 1,
+            })
+        }else {
+            this.props.setCart({
+                ...this.props.cart, 
+                [evt.target.id]: 1,
+            })
+        }
+    }
+
     render() {
+        console.log(this.props)
         if(this.props.products) {
             return(
                     <main className={styles.main}>
-                        
                         <div>
                             <p>Featured Products</p>
                             <Carousel
@@ -39,14 +58,17 @@ class Home extends Component {
                                     let url = `/products/${product.productNumber}`
                                     description = description.slice(0, 40)+ "..."
                                     return(
-                                        <Link href={url} key={product.productNumber} passHref>
-                                            <div  className={styles.card}>
-                                                <Image src={img} alt={description} width={106} height={60} />
-                                                <p>{name}</p>
-                                                <p>${price}</p>
-                                                <p>{description}</p>
-                                            </div>
-                                        </Link>
+                                        <div className={styles.card} key={product.productNumber}>
+                                            <Link href={url}  passHref>
+                                                <div>
+                                                    <Image src={img} alt={description} width={106} height={60} />
+                                                    <p>{name}</p>
+                                                    <p>${price}</p>
+                                                    <p>{description}</p>
+                                                </div>
+                                            </Link>
+                                            <input type="button" id={product.productNumber} value="Add to Cart" onClick={evt => this.handleAddCart(evt)} />
+                                        </div>
                                     )
                                 })}
                             </Carousel>
