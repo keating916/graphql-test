@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../../styles/Home.module.css'
 import Link from 'next/link'
 import { Component } from 'react'
+import checkPrice from '../../components/checkPrice'
 
 
 class Products extends Component {
@@ -50,6 +51,7 @@ class Products extends Component {
 						{/* maps over products set by radio buttons, filter and returns product list */}
 						{products.sawblades.map(product => {
 							let { name, price, description } = product;
+							price = checkPrice(price)
 							let img = product.images[0].url
 							let url = `/products/${product.productNumber}`
 							description = description.slice(0, 40)+ "..."

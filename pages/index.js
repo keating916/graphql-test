@@ -2,8 +2,10 @@ import Carousel from 'react-simply-carousel';
 import Image from 'next/image'
 import Link from 'next/link';
 import { GraphQLClient, gql } from 'graphql-request'
+import { useCookies } from 'react-cookie';
 import styles from '../styles/Home.module.css'
 import { Component } from 'react';
+import checkPrice from '../components/checkPrice';
 
 
 class Home extends Component {
@@ -24,6 +26,7 @@ class Home extends Component {
 
     handleAddCart(evt) {
         console.log(evt.target.id)
+        const [cookie, setCookie] = useCookies()
         let t = evt.target.id
         if(this.props.cart[t]) {
 
@@ -37,6 +40,8 @@ class Home extends Component {
                 [evt.target.id]: 1,
             })
         }
+        setCookie("cart", this.props.cart)
+        console.log(cookie)
     }
 
     render() {
@@ -54,6 +59,7 @@ class Home extends Component {
                                 className={styles.grid}>
                                 {this.props.products.sawblades.map(product => {
                                     let { name, price, description, category } = product;
+                                    price = checkPrice(price)
                                     let img = product.images[0].url
                                     let url = `/products/${product.productNumber}`
                                     description = description.slice(0, 40)+ "..."

@@ -1,11 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import { GraphQLClient, gql } from 'graphql-request'
+import checkPrice from '../../components/checkPrice';
+
 import styles from '../../styles/Home.module.css'
 
 
 export default function productPage({ products }) {
     let { name, price, description } = products.sawblades[0];
+    price = checkPrice(price);
     let img = products.sawblades[0].images[0].url
     return(
         <div className={styles.main}>

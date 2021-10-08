@@ -13,16 +13,19 @@ class Cart extends Component {
     render() {
         console.log(this.props)
         if(Object.keys(this.props.cart).length > 0) {
-            for( const [k, v] of Object.entries(this.props.cart)) {
-                let product = this.props.products.sawblades.filter(product => product.productNumber === k)
-                console.log(product)
+            
                 return(
-                    <div className={styles.main} >
-
-                        <CartItem product={product} quantity={v} />
+                    <div className={styles.main}>
+                       { Object.entries(this.props.cart).map((item, index) => {
+                            console.log(item[0], ": ", item[1])
+                            let product = this.props.products.sawblades.filter(product => product.productNumber === item[0])
+                            return <CartItem product={product} quantity={item[1]} key={index}/>
+                            })
+                        }
                     </div>
                 )
-            }
+                
+            
         }else {
             return(
                 <div className={styles.main}>
